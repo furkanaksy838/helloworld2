@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>CAP Uygulamam</h1>
+    <p id="mesaj">Yükleniyor...</p>
+
+    <script>
+        
+        fetch('/say-hello/say()')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('mesaj').innerText = data.value;
+            });
+    </script>
+</body>
+</html>

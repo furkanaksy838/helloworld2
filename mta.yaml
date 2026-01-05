@@ -1,0 +1,39 @@
+_schema-version: 3.3.0
+ID: helloworl2
+version: 1.0.0
+description: "A simple CAP project."
+
+parameters:
+  enable-parallel-deployments: false 
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+        - cp -r app gen/srv/
+
+modules:
+  - name: helloworl2-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+      host: helloworl2-dev        
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: helloworl2-auth
+
+resources:
+  - name: helloworl2-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      config:
+        xsappname: helloworl2-${org}-${space}
+        tenant-mode: dedicated

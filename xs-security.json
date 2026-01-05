@@ -1,0 +1,18 @@
+{
+  "xsappname": "helloworl2",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.User",
+      "description": "User Scope"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "scope-references": [
+        "$XSAPPNAME.User"
+      ]
+    }
+  ]
+}
